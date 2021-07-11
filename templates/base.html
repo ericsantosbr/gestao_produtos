@@ -9,16 +9,18 @@
     <div id="head">
         {% block head %}
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                {% if user.is_authenticated %}
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <a class="nav-link" href="{% url 'list_products' %}">Listar produtos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
+                            <a class="nav-link" href="{% url 'add_products' %}">Adicionar Produtos</a>
                         </li>
                     </ul>
                 </div>
+                {% endif %}
                 <div class="float-right">
                     {% if user.is_authenticated %}
                         Olá, {{ user.username }} <a href="{% url 'logout' %}">Sair</a>

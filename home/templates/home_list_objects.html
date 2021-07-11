@@ -3,7 +3,7 @@
     <table>
         {% for obj in data %}
             <tr>
-                <td><a href="{% url 'edit_products' obj.id %}">{{ obj.name }}</a></td>
+                <td><a href="{% url 'edit_products' obj.id %}">{{ obj.name }}</a> <a href="{% url 'delete_products' obj.id %}">X</a></td>
             </tr>
         {% endfor %}
     </table>

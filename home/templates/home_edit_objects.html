@@ -2,7 +2,7 @@
 {% block content %}
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_ul }}
     <button type="submit">Enviar</button>
     </form>
 {% endblock %}
