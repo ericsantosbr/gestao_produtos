@@ -38,7 +38,6 @@ class SubRegions(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=150)
-    subregion = models.ForeignKey(Regions, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     photo = models.ImageField(
         upload_to=GetFileName,
