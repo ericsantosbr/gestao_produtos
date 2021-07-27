@@ -28,4 +28,4 @@ urlpatterns = [
     path('produtos/', include(urls.urlpatterns), name='produtos_home'),
     path('login/', auth_views.LoginView.as_view(template_name='auth/login.html'), name='login'),
     path('logout/', logout_user, name='logout')
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
