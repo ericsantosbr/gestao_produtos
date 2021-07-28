@@ -15,8 +15,7 @@ def register_user(request):
         print('form.is_valid() :' + str(form.is_valid()))
         print('form_errors: ' + str(form.errors))
         if form.is_valid():
-            form_return = form.save()
-            print('form_return: ' + str(form_return))
+            form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
