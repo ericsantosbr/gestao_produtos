@@ -14,7 +14,9 @@ def home_view(request):
 
 @login_required
 def list_products(request):
-    lista = Product.objects.all()
+    lista = Product.objects.filter(owner=request.user)
+    # lista2 = Product(owner=request.user)
+    # print('Lista: '+ str(lista2) + '\nObjects: ' + str(lista2.objects))
     return render(request, 'home_list_objects.html', {'data': lista})
 
 
