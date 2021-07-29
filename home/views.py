@@ -27,9 +27,8 @@ def edit_products(request, product_id):
     if form.is_valid():
         form.save()
         return redirect('list_products')
-    return render(request, 'home_edit_objects.html', {'form': form})
-
-    return render(request, 'home_edit_objects.html')
+    print(product.photo)
+    return render(request, 'home_edit_objects.html', {'form': form, 'image_url': product.photo})
 
 
 @login_required
