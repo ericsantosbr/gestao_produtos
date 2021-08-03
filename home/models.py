@@ -4,10 +4,9 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
 
 from django.db import models
-import uuid
 
 
-def GetFileName(instance, filename):
+def GetProductImageFileName(instance, filename: str):
     ext = filename.split('.')[-1]
     new_file_name = f'{uuid.uuid4()}.{ext}'
     return os.path.join('product_photos/', new_file_name)
@@ -40,7 +39,7 @@ class Product(models.Model):
     name = models.CharField(max_length=150)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     photo = models.ImageField(
-        upload_to=GetFileName,
+        upload_to=GetProductImageFileName,
         unique=True)
     price = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10000000)])
     description = models.CharField(max_length=20000)
