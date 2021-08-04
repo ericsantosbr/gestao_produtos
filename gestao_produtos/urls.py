@@ -20,12 +20,13 @@ from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-from .views import homepage_view, logout_user, register_user
+from .views import homepage_view, product_view, logout_user, register_user
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', homepage_view, name='homepage'),
     path('produtos/', include(urls.urlpatterns), name='produtos_home'),
+    path('produto/<id>', product_view, name='produto_view'),
     path('login/', auth_views.LoginView.as_view(template_name='auth/login.html'), name='login'),
     path('register/', register_user, name='register'),
     path('logout/', logout_user, name='logout')

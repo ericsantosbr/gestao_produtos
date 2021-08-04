@@ -9,6 +9,15 @@ def homepage_view(request):
     products = Product.objects.all()
     return render(request, 'homepage.html', {'products': products})
 
+def product_view(request, id):
+    try:
+        product = Product.objects.get(id=id)
+        return render(request, 'product_page.html', {'product': product})
+
+    except Product.DoesNotExist:
+        return redirect('homepage')        
+    
+
 def register_user(request):
     if(request.method == 'POST'):
         form = UserCreationForm(request.POST)
