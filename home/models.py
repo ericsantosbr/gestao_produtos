@@ -6,6 +6,9 @@ from decouple import config
 from django.db import models
 
 
+def GetImageUuid4Name(instance, filename: str):
+    return (config('MEDIA_PRODUCT_IMAGES_FOLDER', default='product_photos/')) + GetUuid4Name(filename=filename)
+
 def GetUuid4Name(filename: str):
     ext = filename.split('.')[-1]
     new_file_name = f'{uuid.uuid4()}.{ext}'
@@ -39,10 +42,11 @@ class Product(models.Model):
     name = models.CharField(max_length=150)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     photo = models.ImageField(
-        upload_to=(lambda x, y: (config('MEDIA_PRODUCT_IMAGES_FOLDER', default='product_photos/')) + GetUuid4Name(y)),
+        upload_to=GetImageUuid4Name,
         unique=True)
     price = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10000000)])
     description = models.CharField(max_length=20000)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
