@@ -11,7 +11,7 @@
         <div class="col-md-auto">
             {{ product.owner }} <br>
             R${{ product.price }}<br>
-            {% if product.active == True %}Anúncio finalizado<br><a href="#" class="btn btn-secondary">Comprar</a>
+            {% if product.active == False %}Anúncio finalizado<br><a href="#" class="btn btn-secondary">Comprar</a>
             {% else %}<a href="#" class="btn btn-primary">Comprar</a>{% endif %}
         </div>
     </div>
