@@ -11,8 +11,23 @@
         <div class="col-md-auto">
             {{ product.owner }} <br>
             R${{ product.price }}<br>
-            <a href="#" class="btn btn-primary">Comprar</a>
+            {% if product.active == True %}Anúncio finalizado<br><a href="#" class="btn btn-secondary">Comprar</a>
+            {% else %}<a href="#" class="btn btn-primary">Comprar</a>{% endif %}
         </div>
     </div>
+    {% for comment in comments %}
+    <div class="comments-list" style="background-color: aqua;">
+        <div class="media">
+            <p class="pull-left">{{ comment.author }}</p>
+            <p class="pull-right">{{ comment.date }}</p>
+            <p class="pull-left">{{ comment.content }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button action="SUBMIT">Enviar</button>
+    </form>
 </div>
 {% endblock %}

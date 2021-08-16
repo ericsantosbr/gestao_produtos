@@ -50,3 +50,13 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    post_id = models.CharField(max_length=50)
+    content = models.TextField(max_length=500)
+    date = models.DateField(auto_now=True)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f'id#:{self.id}; post_id:{self.post_id}; content:{self.content[0:50]}'
