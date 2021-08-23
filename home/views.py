@@ -20,13 +20,22 @@ def list_products(request):
 
 @login_required
 def edit_products(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
+    #product = get_object_or_404(Product, pk=product_id)
+    try:
+        product = Product.objects.get(pk=product_id)
+    except Product.DoesNotExist:
+        return render(request, 'home_edit_objects.html', {'product_found': False})
+
+    if(product.active == False):
+        return render(request, 'home_edit_objects.html', {'product_found': False, 'product_active': False})
+
+
     form = EditProduct(request.POST or None, request.FILES or None, instance=product)
     if form.is_valid():
         form.save()
         return redirect('list_products')
     print(product.photo)
-    return render(request, 'home_edit_objects.html', {'form': form, 'image_url': product.photo})
+    return render(request, 'home_edit_objects.html', {'product_found': True, 'product_active': True,'form': form, 'image_url': product.photo})
 
 
 @login_required

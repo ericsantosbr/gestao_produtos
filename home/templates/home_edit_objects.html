@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="container">
+        {% if product_found %}
         <div class="row">
             <div class="col-sm">
+                
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_ul }}
@@ -13,5 +15,12 @@
                 <img src="{{ image_url.url }}">
             </div>
         </div>
+        {% else %}
+            {% if not product_active %}
+            <h1>Ops! O produto requisitado não pode ser editado.</h1>
+            {% else %}
+            <h1>Ops! O produto requisitado não foi encontrado.</h1>
+            {% endif %}
+        {% endif %}
     </div>
 {% endblock %}
