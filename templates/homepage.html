@@ -8,6 +8,9 @@
                 <h5 class="card-title">{{ product.name }}</h5>
                 <p class="card-text">{{ product.description }}</p>
                 <a href="{% url 'produto_view' product.id  %}" class="btn btn-primary">R${{ product.price }}</a>
+                {% if perms.home.change_product %}
+                <a href="{% url 'deactivate_products' product.id  %}" class="btn btn-secondary">Desativar</a>
+                {% endif %}
             </div>
     </div>
     {% endfor %}
