@@ -1,10 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
-    <table>
+    <!--<table>
         {% for obj in data %}
             <tr>
                 <td><a href="{% url 'edit_products' obj.id %}">{{ obj.name }}</a> <a href="{% url 'deactivate_products' obj.id %}">X</a></td>
             </tr>
         {% endfor %}
-    </table>
+    </table>-->
+    
+    {% if active_products|length > 0 %}
+    <h1>Anúncios Ativos</h1>
+        {% for obj in active_products %}
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{{ obj.photo.url }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ obj.name }}</h5>
+                    <p class="card-text">{{ obj.description }}</p>
+                    <a href="{% url 'produto_view' obj.id  %}" class="btn btn-primary">R${{ obj.price }}</a>
+                    <a href="{% url 'deactivate_products' obj.id  %}" class="btn btn-secondary">Desativar</a>
+                </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% if inactive_products|length > 0 %}
+    <h1>Anúncios Inativos</h1>
+        {% for obj in inactive_products %}
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{{ obj.photo.url }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ obj.name }}</h5>
+                    <p class="card-text">{{ obj.description }}</p>
+                    <a href="{% url 'produto_view' obj.id  %}" class="btn btn-secondary">R${{ obj.price }}</a>
+                    <!-- <a href="{% url 'deactivate_products' obj.id  %}" class="btn btn-secondary">Desativar</a> -->
+                </div>
+        </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

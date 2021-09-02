@@ -1,5 +1,6 @@
 import os
 from django.conf import settings
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from .models import Product
@@ -14,8 +15,10 @@ def home_view(request):
 
 @login_required
 def list_products(request):
-    lista = Product.objects.filter(owner=request.user)
-    return render(request, 'home_list_objects.html', {'data': lista})
+    active_products = Product.objects.filter(owner=request.user, active=True)
+    inactive_products = Product.objects.filter(owner=request.user, active=False)
+    
+    return render(request, 'home_list_objects.html', {'active_products': active_products, 'inactive_products': inactive_products})
 
 
 @login_required
@@ -34,7 +37,7 @@ def edit_products(request, product_id):
     if form.is_valid():
         form.save()
         return redirect('list_products')
-    print(product.photo)
+        
     return render(request, 'home_edit_objects.html', {'product_found': True, 'product_active': True,'form': form, 'image_url': product.photo})
 
 
@@ -57,9 +60,13 @@ def delete_products(request, product_id):
 
     return render(request, 'home_delete_object.html', {'data': product})
 
-@permission_required('home.change_product', raise_exception=True)
+@login_required
+#@permission_required('home.change_product', raise_exception=True)
 def deactivate_products(request, product_id):
-    product:Product = get_object_or_404(Product, pk=product_id)
+    if (product.owner != request.user and not request.user.has_perm('home.change_product')):
+        return HttpResponseForbidden()
+    
+    product:Product = get_object_or_404(Product, pk=product_id)    
 
     if request.POST:
         product.active = False
